@@ -1,6 +1,9 @@
 from sqlalchemy import Integer,String,Text,DECIMAL,ForeignKey
-from sqlalchemy.orm import (relationship,Mapped,mapped_column,DeclarativeBase,Session)
-from sqlalchemy.ext.asyncio import (create_async_engine,AsyncSession,async_sessionmaker,AsyncAttrs,AsyncEngine)
+from sqlalchemy.orm import (relationship,Mapped,mapped_column,
+                            DeclarativeBase,Session)
+from sqlalchemy.ext.asyncio import (create_async_engine,AsyncSession,
+                                    async_sessionmaker,AsyncAttrs,
+                                    AsyncEngine)
 
 from config import MYSQL_URL
 
@@ -31,6 +34,30 @@ class Rab(Base):
     phone:Mapped[str] = mapped_column(String(20))
     address:Mapped[str] = mapped_column(Text)
     
-    department_id:Mapped[int] = mapped_column(ForeignKey('departament.id'))
+    department_id:Mapped[int] = mapped_column(ForeignKey('department.id'))
     
     department = relationship('Department', back_populates='rab')
+    
+
+
+
+async def models_main():
+    async with engine.begin() as conn:
+        await conn.run_sync(Base.metadata.create_all)
+        
+        
+        async with async_session() as session:
+            department = Department(name = 'IT')
+            session.add(department)
+            await session.commit()
+
+
+
+
+
+
+
+
+
+
+

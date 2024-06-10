@@ -8,7 +8,11 @@ async def get_departments():
         return result
     
 
-
+async def get_rabs(department_id):
+    async with async_session() as session:
+        result = await session.scalars(select(Rab).where(
+            Rab.department_id == department_id))
+        return result
 
 
 

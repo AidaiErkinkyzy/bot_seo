@@ -17,6 +17,12 @@ async def help(message:Message):
 @router.message(F.text == 'Departments')
 async def departments(message:Message):
     await message.answer("Choice department",reply_markup= await KB.departments_kb())
+
+@router.callback_query(F.data.startswith("department_"))
+async def department(callback:CallbackQuery):
+    department_id = callback.data.split("_")[1]
+    await callback.message.answer("Люди работающие в этом отделе", reply_markup=await KB.rab_kb(department_id))
+
 # @router.message(Command(commands=["about"]))
 # async def about_us(message:Message):
 #     await message.answer("We are a not a company, we are naemniki")

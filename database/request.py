@@ -16,4 +16,14 @@ async def get_rabs(department_id):
 
 
 
+async def get_rab(rab_id):
+    async with async_session() as session:
+        result = await session.scalar(select(Rab).where(
+            Rab.id == rab_id))
+        return result
 
+
+async def get_worker():
+    async with async_session() as session:
+        result = await session.scalars(select(Rab))
+        return result

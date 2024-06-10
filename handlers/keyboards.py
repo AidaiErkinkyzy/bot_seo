@@ -6,7 +6,8 @@ from database.request import *
 kb = ReplyKeyboardMarkup(keyboard=[
     [KeyboardButton(text='Departments')],
     [KeyboardButton(text='Rabы')]],
-    resize_keyboard=True,input_field_placeholder='Выберите действие')
+    resize_keyboard=True,input_field_placeholder='Выберите действие',
+    one_time_keyboard=True)
 
 async def departments_kb():
     departments = await get_departments()
@@ -16,6 +17,16 @@ async def departments_kb():
             callback_data=f'department_{depp.id}'))
     return kb.adjust(2).as_markup()
 
+async def workers_kb():
+    workers= await get_worker()
+    kb = InlineKeyboardBuilder()
+    for worker in workers:
+        kb.add(InlineKeyboardButton(text = f'{worker.first_name} {worker.last_name}',
+            callback_data=f'rab_{worker.id}'))
+    return kb.adjust(2).as_markup()
+
+
+
 async def rab_kb(department_id):
     rab = await get_rabs(department_id)
     kb = InlineKeyboardBuilder()
@@ -23,6 +34,10 @@ async def rab_kb(department_id):
         kb.add(InlineKeyboardButton(text = f'{rabs.first_name} {rabs.last_name}',
             callback_data=f'rab_{rabs.id}'))
     return kb.adjust(2).as_markup()
+
+
+
+
 
 # ['faf','afa','afa','afadfa']
 

@@ -48,7 +48,7 @@ async def models_main():
         
         async with async_session() as session:
             department = Rab(first_name = 'Robert',last_name = 'Downney jr.',
-                            age = 32,salary = 5000.00,
+                            age = 34,salary = 5000.00,
                             email = 'IronMan@gmail.com',phone = 666,
                             address = 'Mexico',department_id = 6)
             session.add(department)
